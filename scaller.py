@@ -120,7 +120,7 @@ if selected == "Details":
         c11.metric("Current Price",symbol.info["currentPrice"])
         c12.metric("Currency",symbol.info["currency"])
         c13.metric("Exchange",symbol.info["exchange"])
-        c14.metric("Financial Currency",symbol.info["financialCurrency"])
+        c14.metric("Full time employees",symbol.info["fullTimeEmployees"])
         c15.metric("Regular Market Open",symbol.info['regularMarketOpen'])
         style_metric_cards()
         st.subheader('Long Business Summary')
