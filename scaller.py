@@ -178,13 +178,24 @@ if selected == "Stock info":
         st.caption("Balance sheet,is a statement of financial position, provides a summary of a company's assets, liabilities, and shareholders' equity at a specific point in time.")
         st.write('Company :',symbol.info["longName"])
         st.dataframe(balance_sheet,use_container_width=True)
+        balance_metric = "Current Assets"
+        balance_data_row = balance_sheet.loc[balance_metric]
+        balance_data = pd.to_numeric(balance_data_row, errors='coerce')
+        fig13 = px.bar(x=balance_data.index, y=balance_data.values, labels={'x': 'Year', 'y': balance_metric})
+        fig13.update_layout(title=f'{balance_metric} Over Time for {symbol.info["longName"]}', xaxis_title='Year', yaxis_title=balance_metric)
+        st.plotly_chart(fig13,use_container_width=True)
 
-        # Display the cashflow using DataFrame
         st.markdown('__<p style="text-align:center; font-size: 18px; color: #FDFEFE "> Cash flow </P>__',
                 unsafe_allow_html=True)
         st.caption("The cash flow statement is a financial statement that provides a detailed account of the cash inflows and outflows during a specific period, typically a quarter or a year.")
         st.write('Company :',symbol.info["longName"])
         st.dataframe(cashflow,use_container_width=True)
+        cash_metric = "Free Cash Flow"
+        cash_data_row = cashflow.loc[cash_metric]
+        cash_data = pd.to_numeric(cash_data_row, errors='coerce')      
+        fig14 = px.bar(x=cash_data.index, y=cash_data.values, labels={'x': 'Year', 'y': cash_metric})
+        fig14.update_layout(title=f'{cash_metric} Over Time for {symbol.info["longName"]}', xaxis_title='Year', yaxis_title=cash_metric)
+        st.plotly_chart(fig14,use_container_width=True)
 
        except:
         st.error("Error fetching the data. Please check the stock symbol and try again.")
@@ -214,6 +225,12 @@ if selected == "Stock info":
             st.caption("The income statement summarizes a company's revenues, expenses, and profits or losses during that period and helps stakeholders understand how the company's operations have contributed to its financial results.")
             st.write('Company :',symbol.info["longName"])
             st.dataframe(income_statement_data,use_container_width=True)
+            income_metric = "Total Revenue"
+            income_data_row = income_statement_data.loc[income_metric]
+            income_data = pd.to_numeric(income_data_row, errors='coerce')
+            fig12 = px.bar(x=income_data.index, y=income_data.values, labels={'x': 'Year', 'y': income_metric})
+            fig12.update_layout(title=f'{income_metric} Over Time for {symbol.info["longName"]}', xaxis_title='Year', yaxis_title=income_metric)
+            st.plotly_chart(fig12,use_container_width=True)
          else:
             st.error("Error fetching the income statement. Please check the stock symbol and try again.")
         
