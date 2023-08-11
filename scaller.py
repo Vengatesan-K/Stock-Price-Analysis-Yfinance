@@ -7,7 +7,6 @@ from datetime import datetime
 import plotly.graph_objects as go
 from streamlit_extras.metric_cards import style_metric_cards
 from datetime import date
-import plotly.graph_objects as go
 import plotly_express as px
 from stocknews import StockNews
 import numpy as np
@@ -48,6 +47,14 @@ def style_metric_cards(
     
     
 st.image('sto.png')
+
+
+with st.sidebar:
+    mention(
+    label="Stock Price Analyzer",
+    icon="Streamlit",  # Some icons are available... like Streamlit!
+    url="https://stock-price-analysis-yfinance-veng2612.streamlit.app/",)
+ 
 df1 = pd.read_csv('symbols.csv', encoding='ISO-8859-1')
 choice = st.sidebar.selectbox("Select Ticker", df1)
 symbol = yf.Ticker(choice)
@@ -143,6 +150,12 @@ if selected == "Stock info":
         
       except:
         st.error("Error fetching the quote table. Please check the stock symbol and try again.")
+      c21,c22,c23,c24=st.columns(4)         
+      c21.metric("Fifty Two Week low",symbol.info["fiftyTwoWeekLow"])
+      c22.metric("Fifty Two Week high",symbol.info["fiftyTwoWeekHigh"])
+      c23.metric("fifty days average",symbol.info["fiftyDayAverage"])
+      c24.metric("Two Hundred Days average",symbol.info["twoHundredDayAverage"])
+      style_metric_cards()
         
     
     with tab2:
@@ -227,6 +240,8 @@ if selected == "Stock info":
             st.caption("A mutual fund holder's statement is a document provided by the mutual fund company to individual investors who have invested in their mutual funds.")
             st.write('Company :',symbol.info["longName"])
             st.dataframe(mutual_fund_holders_data,use_container_width=True)
+            fig7 = px.pie(mutual_fund_holders_data, values='Shares', names='Holder', title="Mutualfund Holder's shares")    
+            st.plotly_chart(fig7,use_container_width=True)
         else:
             st.error("Error fetching the mutual fund holders' data. Please check the stock symbol and try again.")
             
