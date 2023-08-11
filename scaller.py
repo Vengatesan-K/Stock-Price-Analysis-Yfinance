@@ -12,6 +12,7 @@ from stocknews import StockNews
 import numpy as np
 from plotly.subplots import make_subplots
 from streamlit_extras.add_vertical_space import add_vertical_space
+from streamlit_extras.mention import mention
 
 st.set_page_config(page_title="Stock Analysis",page_icon="📈",layout="wide",initial_sidebar_state="expanded",)
 
